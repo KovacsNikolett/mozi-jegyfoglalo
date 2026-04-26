@@ -1,0 +1,15 @@
+{
+  "name": "Mozi jegyfoglaló",
+  "short_name": "Mozi",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#20232a",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+services:
+  mozi-app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - PORT=3000
+      - DB_STORAGE=database.sqlite
+      - JWT_SECRET=fejlesztesi_titkos_kulcs
