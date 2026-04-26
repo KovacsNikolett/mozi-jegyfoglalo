@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mozi jegyfoglaló</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="manifest" href="manifest.json">
+</head>
+<body>
+  <header>
+    <h1>Mozi jegyfoglaló rendszer</h1>
+    <p>Filmek megtekintése, vetítések listázása és jegyfoglalás kiválasztott időpontra.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Elérhető filmek és vetítések</h2>
+      <div id="movieList" class="movie-grid"></div>
+    </section>
+
+    <section class="panel">
+      <h2>Jegyfoglalás</h2>
+      <form id="bookingForm">
+        <label>Vetítés
+          <select id="screeningId" required></select>
+        </label>
+
+        <label>Név
+          <input id="customerName" type="text" placeholder="Példa Anna" required>
+        </label>
+
+        <label>Email
+          <input id="customerEmail" type="email" placeholder="anna@example.com" required>
+        </label>
+
+        <label>Székek
+          <input id="seats" type="text" placeholder="A1,A2" required>
+        </label>
+
+        <button type="submit">Foglalás elküldése</button>
+      </form>
+      <p id="message"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>Projektfeladat – Webprogramozás alapjai</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
