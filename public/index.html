@@ -20,7 +20,56 @@
     </section>
 
     <section class="panel">
+      <h2>Felhasználói fiók</h2>
+
+      <div id="loggedOutBox">
+        <h3>Regisztráció</h3>
+        <form id="registerForm">
+          <label>Név
+            <input id="registerName" type="text" placeholder="Példa Anna" required>
+          </label>
+
+          <label>Email
+            <input id="registerEmail" type="email" placeholder="anna@example.com" required>
+          </label>
+
+          <label>Jelszó
+            <input id="registerPassword" type="password" placeholder="Legalább 6 karakter" required>
+          </label>
+
+          <button type="submit">Regisztráció</button>
+        </form>
+
+        <hr>
+
+        <h3>Bejelentkezés</h3>
+        <form id="loginForm">
+          <label>Email
+            <input id="loginEmail" type="email" placeholder="anna@example.com" required>
+          </label>
+
+          <label>Jelszó
+            <input id="loginPassword" type="password" placeholder="Jelszó" required>
+          </label>
+
+          <button type="submit">Bejelentkezés</button>
+        </form>
+      </div>
+
+      <div id="loggedInBox" class="hidden">
+        <p>Bejelentkezve mint: <strong id="loggedInUser"></strong></p>
+        <button id="loadMyBookingsButton" type="button">Saját foglalásaim megtekintése</button>
+        <button id="logoutButton" type="button" class="secondary-button">Kijelentkezés</button>
+        <div id="myBookings" class="booking-list"></div>
+      </div>
+
+      <p id="authMessage"></p>
+    </section>
+
+    <section class="panel booking-panel">
       <h2>Jegyfoglalás</h2>
+      <p class="small-info">Foglalni bejelentkezés nélkül is lehet, de bejelentkezve később meg tudod nézni a saját foglalásaidat.</p>
+
       <form id="bookingForm">
         <label>Vetítés
           <select id="screeningId" required></select>

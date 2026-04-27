@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin felület - Mozi jegyfoglaló</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Admin felület</h1>
+    <p>Filmek és vetítések kezelése</p>
+    <p><a class="header-link" href="/">Vissza a főoldalra</a></p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <h2>Admin bejelentkezés</h2>
+      <p class="small-info">Alap admin adatok: admin@mozi.hu / admin123</p>
+
+      <form id="adminLoginForm">
+        <label>Email
+          <input id="adminEmail" type="email" value="admin@mozi.hu" required>
+        </label>
+
+        <label>Jelszó
+          <input id="adminPassword" type="password" value="admin123" required>
+        </label>
+
+        <button type="submit">Admin bejelentkezés</button>
+      </form>
+
+      <p id="adminLoginMessage"></p>
+    </section>
+
+    <section id="adminContent" class="panel hidden">
+      <h2>Új film hozzáadása</h2>
+
+      <form id="movieForm">
+        <label>Film címe
+          <input id="movieTitle" type="text" placeholder="Például: Új kalandfilm" required>
+        </label>
+
+        <label>Leírás
+          <input id="movieDescription" type="text" placeholder="Rövid filmleírás" required>
+        </label>
+
+        <label>Hossz percben
+          <input id="movieDuration" type="number" min="1" placeholder="120" required>
+        </label>
+
+        <label>Kép URL
+          <input id="moviePosterUrl" type="text" placeholder="https://... vagy /images/film.jpg">
+        </label>
+
+        <button type="submit">Film mentése</button>
+      </form>
+
+      <p id="movieMessage"></p>
+
+      <hr>
+
+      <h2>Új vetítés hozzáadása</h2>
+
+      <form id="screeningForm">
+        <label>Film
+          <select id="screeningMovieId" required></select>
+        </label>
+
+        <label>Vetítés időpontja
+          <input id="screeningStartTime" type="datetime-local" required>
+        </label>
+
+        <label>Terem
+          <input id="screeningRoom" type="text" placeholder="1-es terem" required>
+        </label>
+
+        <label>Összes férőhely
+          <input id="screeningTotalSeats" type="number" min="1" placeholder="40" required>
+        </label>
+
+        <button type="submit">Vetítés mentése</button>
+      </form>
+
+      <p id="screeningMessage"></p>
+
+      <hr>
+
+      <h2>Jelenlegi filmek és vetítések</h2>
+      <button id="refreshButton" type="button">Lista frissítése</button>
+      <div id="adminMovieList" class="booking-list"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Projektfeladat – Webprogramozás alapjai</p>
+  </footer>
+
+  <script src="admin.js"></script>
+</body>
+</html>

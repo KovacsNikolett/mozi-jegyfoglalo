@@ -17,11 +17,12 @@ header {
 }
 
 main {
-  width: min(1100px, 94%);
+  width: min(1200px, 94%);
   margin: 24px auto;
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 20px;
+  align-items: start;
 }
 
 .panel {
@@ -29,6 +30,10 @@ main {
   border-radius: 14px;
   padding: 20px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+
+.booking-panel {
+  grid-column: 1 / -1;
 }
 
 .movie-grid {
@@ -88,8 +93,45 @@ button:hover {
   background: #0b5ed7;
 }
 
-#message {
+.secondary-button {
+  background: #6c757d;
+  margin-top: 10px;
+}
+
+.secondary-button:hover {
+  background: #5c636a;
+}
+
+#message,
+#authMessage {
   font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+.small-info {
+  color: #555;
+  font-size: 0.95rem;
+}
+
+.booking-list {
+  margin-top: 14px;
+}
+
+.booking-item {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 10px;
+  background: #fafafa;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
 }
 
 footer {
@@ -97,9 +139,13 @@ footer {
   padding: 20px;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   main {
     grid-template-columns: 1fr;
+  }
+
+  .booking-panel {
+    grid-column: auto;
   }
 
   header {

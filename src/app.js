@@ -121,6 +121,28 @@ app.post("/api/admin/movies", requireAuth, requireAdmin, async (req, res) => {
   res.status(201).json(movie);
 });
 
+app.post("/api/admin/screenings", requireAuth, requireAdmin, async (req, res) => {
+  const { movieId, startTime, room, totalSeats } = req.body;
+
+  if (!movieId || !startTime || !room || !totalSeats) {
+    return res.status(400).json({ message: "Film, időpont, terem és férőhely megadása kötelező." });
+  }
+
+  const movie = await Movie.findByPk(movieId);
+  if (!movie) {
+    return res.status(404).json({ message: "A film nem található." });
+  }
+
+  const screening = await Screening.create({
+    movie_id: movieId,
+    startTime,
+    room,
+    totalSeats
+  });
+
+  res.status(201).json(screening);
+});
+
 async function initDatabase() {
   await sequelize.sync();
 
