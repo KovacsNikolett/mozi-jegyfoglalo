@@ -83,9 +83,17 @@
           <input id="customerEmail" type="email" placeholder="anna@example.com" required>
         </label>
 
-        <label>Székek
-          <input id="seats" type="text" placeholder="A1,A2" required>
-        </label>
+       <label>Székek
+  <input id="seats" type="text" placeholder="Válassz széket lent" readonly required>
+</label>
+
+<div class="seat-info">
+  <span>⬜ Szabad</span>
+  <span>🟩 Kiválasztott</span>
+  <span>🟥 Foglalt</span>
+</div>
+
+<div id="seatMap" class="seat-map"></div>
 
         <button type="submit">Foglalás elküldése</button>
       </form>

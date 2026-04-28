@@ -12,6 +12,7 @@ const loggedInUser = document.getElementById("loggedInUser");
 const logoutButton = document.getElementById("logoutButton");
 const loadMyBookingsButton = document.getElementById("loadMyBookingsButton");
 const myBookings = document.getElementById("myBookings");
+let selectedSeats = [];
 
 function getToken() {
   return localStorage.getItem("token");
@@ -72,10 +73,12 @@ async function loadMovies() {
     movie.Screenings.forEach(s => {
       const option = document.createElement("option");
       option.value = s.id;
-      option.textContent = `${movie.title} – ${new Date(s.startTime).toLocaleString("hu-HU")} – ${s.room}`;
-      screeningSelect.appendChild(option);
+  option.textContent = `${movie.title} – ${new Date(s.startTime).toLocaleString("hu-HU")} – ${s.room}`;
+  option.dataset.totalSeats = s.totalSeats;
+  screeningSelect.appendChild(option);
     });
   });
+  renderSeats();
 }
 
 registerForm.addEventListener("submit", async (event) => {
@@ -174,10 +177,8 @@ loadMyBookingsButton.addEventListener("click", async () => {
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
 
-  const seats = document.getElementById("seats").value
-    .split(",")
-    .map(seat => seat.trim().toUpperCase())
-    .filter(Boolean);
+  const seats = selectedSeats;
+  
 
   const body = {
     screeningId: Number(screeningSelect.value),
@@ -217,3 +218,62 @@ if ("serviceWorker" in navigator) {
 
 loadMovies();
 updateAuthView();
+
+async function getBookedSeats(screeningId) {
+  const response = await fetch(`/api/screenings/${screeningId}/seats`);
+  const result = await response.json();
+  return result.bookedSeats || [];
+}
+
+function seatNameByNumber(number) {
+  const rowLetter = String.fromCharCode(65 + Math.floor((number - 1) / 10));
+  const seatNumber = ((number - 1) % 10) + 1;
+  return `${rowLetter}${seatNumber}`;
+}
+
+async function renderSeats() {
+  const seatMap = document.getElementById("seatMap");
+  const selectedSeatsInput = document.getElementById("seats");
+  const selectedOption = screeningSelect.options[screeningSelect.selectedIndex];
+
+  if (!seatMap || !selectedOption) return;
+
+  selectedSeats = [];
+  selectedSeatsInput.value = "";
+
+  const screeningId = screeningSelect.value;
+  const totalSeats = Number(selectedOption.dataset.totalSeats || 40);
+  const bookedSeats = await getBookedSeats(screeningId);
+
+  seatMap.innerHTML = "";
+
+  for (let i = 1; i <= totalSeats; i++) {
+    const seatName = seatNameByNumber(i);
+    const button = document.createElement("button");
+
+    button.type = "button";
+    button.textContent = seatName;
+    button.className = "seat-button";
+
+    if (bookedSeats.includes(seatName)) {
+      button.classList.add("booked-seat");
+      button.disabled = true;
+    }
+
+    button.addEventListener("click", () => {
+      if (button.classList.contains("selected-seat")) {
+        button.classList.remove("selected-seat");
+        selectedSeats = selectedSeats.filter(seat => seat !== seatName);
+      } else {
+        button.classList.add("selected-seat");
+        selectedSeats.push(seatName);
+      }
+
+      selectedSeatsInput.value = selectedSeats.join(",");
+    });
+
+    seatMap.appendChild(button);
+  }
+}
+
+screeningSelect.addEventListener("change", renderSeats);

@@ -28,7 +28,28 @@ app.get("/api/screenings", async (req, res) => {
     include: [Movie],
     order: [["startTime", "ASC"]]
   });
+
   res.json(screenings);
+});
+
+app.get("/api/screenings/:id/seats", async (req, res) => {
+  const screening = await Screening.findByPk(req.params.id);
+
+  if (!screening) {
+    return res.status(404).json({ message: "A vetítés nem található." });
+  }
+
+  const bookings = await Booking.findAll({
+    where: { screening_id: req.params.id }
+  });
+
+  const bookedSeats = bookings.flatMap(booking => JSON.parse(booking.seats));
+
+  res.json({
+    screeningId: Number(req.params.id),
+    totalSeats: screening.totalSeats,
+    bookedSeats
+  });
 });
 
 app.post("/api/bookings", optionalAuth, async (req, res) => {
