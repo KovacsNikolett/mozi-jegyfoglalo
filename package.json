@@ -19,9 +19,15 @@
   },
   "devDependencies": {
     "jest": "^29.7.0",
-    "supertest": "^7.0.0"
+    "supertest": "^7.2.2"
   },
-  "keywords": ["webprogramozas", "mozi", "jegyfoglalas", "express", "sqlite"],
+  "keywords": [
+    "webprogramozas",
+    "mozi",
+    "jegyfoglalas",
+    "express",
+    "sqlite"
+  ],
   "author": "",
   "license": "MIT"
 }
