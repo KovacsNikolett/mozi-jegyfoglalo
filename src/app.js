@@ -11,6 +11,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static("public"));
 
+const path = require("path");
+
+app.get("/admin", (req, res) => {
+  res.sendFile(path.join(__dirname, "../public/admin.html"));
+});
+
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", app: "Mozi jegyfoglaló" });
 });

@@ -1,9 +1,10 @@
+process.env.DB_STORAGE = ":memory:";
+
 const request = require("supertest");
-const { app, initDatabase } = require("../src/app");
+const { app } = require("../src/app");
 const { sequelize, Movie, Screening } = require("../src/db");
 
 beforeAll(async () => {
-  process.env.DB_STORAGE = ":memory:";
   await sequelize.sync({ force: true });
 
   const movie = await Movie.create({
@@ -14,7 +15,8 @@ beforeAll(async () => {
   });
 
   await Screening.create({
-    movie_id: movie.id,
+    MovieId: movie.id,
+    movieId: movie.id,
     startTime: "2026-05-01T18:00:00",
     room: "Teszt terem",
     totalSeats: 20
@@ -27,7 +29,9 @@ afterAll(async () => {
 
 test("GET /api/movies visszaadja a filmeket", async () => {
   const res = await request(app).get("/api/movies");
+
   expect(res.statusCode).toBe(200);
+  expect(Array.isArray(res.body)).toBe(true);
   expect(res.body.length).toBeGreaterThan(0);
   expect(res.body[0]).toHaveProperty("title");
 });
@@ -44,5 +48,11 @@ test("POST /api/bookings létrehoz egy foglalást", async () => {
 
   expect(res.statusCode).toBe(201);
   expect(res.body).toHaveProperty("id");
-  expect(res.body.seats).toEqual(["A1", "A2"]);
+
+  const seats =
+    typeof res.body.seats === "string"
+      ? JSON.parse(res.body.seats)
+      : res.body.seats;
+
+  expect(seats).toEqual(["A1", "A2"]);
 });
