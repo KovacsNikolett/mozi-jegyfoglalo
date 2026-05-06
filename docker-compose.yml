@@ -7,3 +7,7 @@ services:
       - PORT=3000
       - DB_STORAGE=database.sqlite
       - JWT_SECRET=fejlesztesi_titkos_kulcs
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - ./database.sqlite:/app/database.sqlite
