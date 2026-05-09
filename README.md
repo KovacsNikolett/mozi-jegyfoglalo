@@ -104,7 +104,27 @@ npm install
 ```bash
 npm start
 ```
+---
 
+## Docker indítás
+
+A projekt Docker környezetben is futtatható.
+
+### Docker Desktop indítása
+
+A futtatás előtt szükséges a Docker Desktop alkalmazás elindítása.
+
+### Konténer indítása
+
+```bash
+docker compose up --build
+```
+
+### Elérés
+
+```text
+http://localhost:3000
+```
 ---
 
 ## Alapértelmezett elérés
