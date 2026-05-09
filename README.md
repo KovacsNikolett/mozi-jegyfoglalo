@@ -1,269 +1,195 @@
-# Mozi jegyfoglaló webalkalmazás
+# Mozi Jegyfoglaló Rendszer
 
-Ez a projekt egy egyszerű online jegyfoglaló rendszer mozik számára.  
-A felhasználó meg tudja nézni a filmeket, a hozzájuk tartozó vetítéseket, majd jegyet tud foglalni a kiválasztott időpontra.
+Online mozi jegyfoglaló webalkalmazás, amely lehetővé teszi a felhasználók számára a filmek megtekintését, vetítések kiválasztását és jegyek foglalását.  
+A projekt Node.js, Express és SQLite használatával készült.
 
-## Megvalósított alapkövetelmények
+---
 
-- Legalább 2 API végpont: több végpont is készült.
-- Reszponzív kliensoldal: CSS Grid, Flexbox és Media Query használatával.
-- Relációs adattárolás: SQLite adatbázis.
-- Legalább 2 teszt: Jest + Supertest.
-- Git verziókezelés: a csomag tartalmaz `.git` mappát és 5 commitot.
-- Markdown dokumentáció: ez a README tartalmazza a felépítést, konfigurációt és végpontokat.
+## Funkciók
 
-## Választott kiegészítő funkciók
 
-1. **Konténerizáció Dockerrel**
-   - `Dockerfile`
-   - `docker-compose.yml`
+### Felhasználói funkciók
+- Regisztráció
+- Bejelentkezés
+- JWT alapú hitelesítés
+- Filmek listázása
+- Vetítések megtekintése
+- Székfoglalás
+- Saját foglalások megtekintése
 
-2. **Autentikáció JWT-vel**
-   - Regisztráció: `POST /api/auth/register`
-   - Bejelentkezés: `POST /api/auth/login`
-   - Saját foglalások: `GET /api/bookings/my`
+### Admin funkciók
+- Filmek hozzáadása
+- Vetítések kezelése
+- Felhasználók kezelése
 
-3. **ORM rendszer használata**
-   - Sequelize ORM SQLite adatbázissal.
+---
 
-4. **Offline mód Service Workerrel**
-   - `public/service-worker.js`
-   - `public/manifest.json`
+## Képernyőképek
 
-## Alkalmazás felépítése
+### Főoldal
 
-```text
-mozi-jegyfoglalo-projekt/
-├── public/
-│   ├── index.html
-│   ├── style.css
-│   ├── script.js
-│   ├── manifest.json
-│   └── service-worker.js
-├── sql/
-│   └── init.sql
-├── src/
-│   ├── app.js
-│   ├── db.js
-│   ├── server.js
-│   └── middleware/
-│       └── auth.js
-├── tests/
-│   └── api.test.js
-├── Dockerfile
-├── docker-compose.yml
-├── package.json
-└── README.md
+![Főoldal](screenshots/home.PNG)
+
+### Bejelentkezés
+
+![Bejelentkezés](screenshots/login.PNG)
+
+![Bejelentkezés 2](screenshots/login_1.PNG)
+
+![Bejelentkezés 3](screenshots/login_3.PNG)
+
+### Foglalás
+
+![Foglalás](screenshots/booking.PNG)
+
+### Admin felület
+
+![Admin felület](screenshots/admin.PNG)
+
+![Admin felület 2](screenshots/admin_1.PNG)
+
+![Admin felület 3](screenshots/admin_2.PNG)
+
+
+## Használt technológiák
+
+### Backend
+- Node.js
+- Express.js
+- SQLite3
+- Sequelize ORM
+- JWT autentikáció
+- bcryptjs
+- dotenv
+
+### Frontend
+- HTML
+- CSS
+- JavaScript
+
+### Egyéb
+- GitHub
+- Docker (tesztelési célból)
+- Jest
+- Supertest
+
+---
+
+## Telepítés
+
+### Repository klónozása
+
+```bash
+git clone https://github.com/KovacsNikolett/mozi-jegyfoglalo.git
 ```
 
-## Telepítés és futtatás
+### Projekt mappa megnyitása
 
-### 1. Függőségek telepítése
+```bash
+cd mozi-jegyfoglalo
+```
+
+### Függőségek telepítése
 
 ```bash
 npm install
 ```
 
-### 2. Környezeti változók beállítása
+---
 
-Másold le az `.env.example` fájlt `.env` néven:
+## Projekt indítása
 
-```bash
-cp .env.example .env
-```
-
-Windows alatt:
-
-```bash
-copy .env.example .env
-```
-
-### 3. Alkalmazás indítása
+### Normál indítás
 
 ```bash
 npm start
 ```
 
-Ezután az alkalmazás itt érhető el:
+---
+
+## Alapértelmezett elérés
+
+A szerver indítása után:
 
 ```text
 http://localhost:3000
 ```
 
-## Tesztek futtatása
-
-```bash
-npm test
-```
-
-A projekt két alap tesztet tartalmaz:
-
-1. Filmek lekérése.
-2. Jegyfoglalás létrehozása.
-
-## Docker használata
-
-```bash
-docker compose up --build
-```
-
-Ezután az alkalmazás szintén itt érhető el:
-
-```text
-http://localhost:3000
-```
+---
 
 ## Adatbázis
 
-Az alkalmazás SQLite relációs adatbázist használ.  
-Az adatbázis táblái:
+A projekt SQLite adatbázist használ Sequelize ORM segítségével.
 
-- `users`
-- `movies`
-- `screenings`
-- `bookings`
+Táblák:
+- Users
+- Movies
+- Screenings
+- Bookings
 
-Az adatbázis létrehozásához szükséges SQL fájl:
-
-```text
-sql/init.sql
-```
-
-A szerver induláskor Sequelize ORM segítségével is létrehozza a táblákat, ha még nem léteznek.
+---
 
 ## API végpontok
 
-### Állapot ellenőrzése
-
-```http
-GET /api/health
-```
-
-Válasz:
-
-```json
-{
-  "status": "ok",
-  "app": "Mozi jegyfoglaló"
-}
-```
-
-### Filmek listázása
+### Filmek lekérése
 
 ```http
 GET /api/movies
 ```
 
-Leírás: Lekéri a filmeket és a hozzájuk tartozó vetítéseket.
-
-### Vetítések listázása
+### Vetítések lekérése
 
 ```http
 GET /api/screenings
 ```
 
-Leírás: Lekéri az összes vetítést a filmadatokkal együtt.
-
-### Jegyfoglalás létrehozása
-
-```http
-POST /api/bookings
-```
-
-Példa kérés:
-
-```json
-{
-  "screeningId": 1,
-  "customerName": "Kovács Anna",
-  "customerEmail": "anna@example.com",
-  "seats": ["A1", "A2"]
-}
-```
-
-Példa válasz:
-
-```json
-{
-  "id": 1,
-  "screeningId": 1,
-  "customerName": "Kovács Anna",
-  "customerEmail": "anna@example.com",
-  "seats": ["A1", "A2"]
-}
-```
-
 ### Regisztráció
 
 ```http
-POST /api/auth/register
-```
-
-Példa kérés:
-
-```json
-{
-  "name": "Kovács Anna",
-  "email": "anna@example.com",
-  "password": "titkos123"
-}
+POST /api/register
 ```
 
 ### Bejelentkezés
 
 ```http
-POST /api/auth/login
+POST /api/login
 ```
 
-Példa kérés:
-
-```json
-{
-  "email": "anna@example.com",
-  "password": "titkos123"
-}
-```
-
-Válaszban a szerver JWT tokent küld vissza.
-
-### Saját foglalások lekérése
+### Foglalás készítése
 
 ```http
-GET /api/bookings/my
+POST /api/bookings
 ```
 
-Header szükséges:
+---
 
-```http
-Authorization: Bearer TOKEN
+## Tesztelés
+
+Teszt futtatása:
+
+```bash
+npm test
 ```
 
-### Admin film létrehozása
+A projekt Jest és Supertest használatával tartalmaz API teszteket.
 
-```http
-POST /api/admin/movies
-```
+---
 
-Csak admin jogosultsággal érhető el.
+## Reszponzív megjelenítés
 
-Alap admin belépés fejlesztéshez:
+A felület mobil és asztali nézetre is optimalizálva lett CSS Flexbox és Grid használatával.
 
-```text
-Email: admin@mozi.hu
-Jelszó: admin123
-```
+---
 
-## Git commit javaslatok
+## Fejlesztési cél
 
-A csomagban már létrehoztam 5 commitot:
+A projekt célja egy egyszerű online mozi jegyfoglaló rendszer létrehozása volt modern webes technológiák használatával.
 
-1. Projekt alapstruktúra létrehozása
-2. Backend API és adatbázis modellek elkészítése
-3. Reszponzív frontend hozzáadása
-4. Tesztek és SQL inicializáló script hozzáadása
-5. Docker, offline mód és dokumentáció hozzáadása
+---
 
-## Rövid értékelési összefoglaló
+## Készítő
 
-A projekt teljesíti a kötelező elvárásokat, mert van benne REST API, reszponzív frontend, SQLite alapú relációs adatbázis, automatizált teszt, Git repository és dokumentáció.  
-A kiegészítő funkciók közül több is elkészült: Docker, JWT autentikáció, Sequelize ORM és Service Worker alapú offline működés.
+Kovács Nikolett Krisztina AGCQFY
+
+Mérnökinformatikus hallgató  
+Gábor Dénes Egyetem

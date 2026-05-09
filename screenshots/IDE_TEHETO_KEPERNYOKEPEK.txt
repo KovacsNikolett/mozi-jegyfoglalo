@@ -1,6 +1,0 @@
-Ide kerülhetnek a beadáshoz készített képernyőképek, például:
-- az alkalmazás főoldala böngészőben,
-- sikeres jegyfoglalás,
-- npm test eredménye,
-- docker compose futás,
-- Service Worker regisztráció a böngésző DevTools Application fülén.
